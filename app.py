@@ -1,8 +1,15 @@
 import streamlit as st
-import pandas as pd
 import joblib
+import gdown
 
-model = joblib.load("training_model.pkl")
+MODEL_URL = "https://drive.google.com/file/d/1X4SRBH1mSqWXmuCUgLKwSPeAh3Ty9kd-/view?usp=drive_link"
+
+@st.cache_resource
+def load_model():
+    gdown.download(MODEL_URL, "model.pkl", quiet=False)
+    return joblib.load("model.pkl")
+
+model = load_model()
 
 st.set_page_config(page_title="Diabetes Predictor")
 
